@@ -410,7 +410,7 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
 /* -------------------------------------------------------------------- */
     pszBasename = (char *) malloc(strlen(pszFilename)+5);
     strcpy( pszBasename, pszFilename );
-    for( i = strlen(pszBasename)-1; 
+    for( i = (int)(strlen(pszBasename)-1);
 	 i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
 	       && pszBasename[i] != '\\';
 	 i-- ) {}
@@ -671,7 +671,7 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
 /* -------------------------------------------------------------------- */
     pszBasename = (char *) malloc(strlen(pszFilename)+5);
     strcpy( pszBasename, pszFilename );
-    for( i = strlen(pszBasename)-1; 
+    for( i = (int)(strlen(pszBasename)-1);
 	 i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
 	       && pszBasename[i] != '\\';
 	 i-- ) {}
@@ -1364,7 +1364,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
         {
             memset( pabyRec+psDBF->panFieldOffset[iField], ' ',
                     psDBF->panFieldSize[iField] );
-	    j = strlen((char *) pValue);
+	    j = (int)strlen((char *) pValue);
         }
 
 	strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
@@ -1433,7 +1433,7 @@ DBFWriteAttributeDirectly(DBFHandle psDBF, int hEntity, int iField,
     {
         memset( pabyRec+psDBF->panFieldOffset[iField], ' ',
                 psDBF->panFieldSize[iField] );
-        j = strlen((char *) pValue);
+        j = (int)strlen((char *) pValue);
     }
 
     strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
@@ -1661,7 +1661,7 @@ static void str_to_upper (char *string)
     int len;
     short i = -1;
 
-    len = strlen (string);
+    len = (int)strlen (string);
 
     while (++i < len)
         if (isalpha(string[i]) && islower(string[i]))
@@ -2111,7 +2111,7 @@ DBFAlterFieldDefn( DBFHandle psDBF, int iField, const char * pszFieldName,
         for (iRecord = 0; iRecord < psDBF->nRecords; iRecord++)
         {
             nRecordOffset =
-                nOldRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength;
+                (int)(nOldRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength);
 
             /* load record */
             psDBF->sHooks.FSeek( psDBF->fp, nRecordOffset, 0 );
@@ -2144,7 +2144,7 @@ DBFAlterFieldDefn( DBFHandle psDBF, int iField, const char * pszFieldName,
             }
 
             nRecordOffset =
-                psDBF->nRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength;
+                (int)(psDBF->nRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength);
 
             /* write record */
             psDBF->sHooks.FSeek( psDBF->fp, nRecordOffset, 0 );
@@ -2165,7 +2165,7 @@ DBFAlterFieldDefn( DBFHandle psDBF, int iField, const char * pszFieldName,
         for (iRecord = psDBF->nRecords - 1; iRecord >= 0; iRecord--)
         {
             nRecordOffset =
-                nOldRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength;
+                (int)(nOldRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength);
 
             /* load record */
             psDBF->sHooks.FSeek( psDBF->fp, nRecordOffset, 0 );
@@ -2203,7 +2203,7 @@ DBFAlterFieldDefn( DBFHandle psDBF, int iField, const char * pszFieldName,
             }
 
             nRecordOffset =
-                psDBF->nRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength;
+                (int)(psDBF->nRecordLength * (SAOffset) iRecord + psDBF->nHeaderLength);
 
             /* write record */
             psDBF->sHooks.FSeek( psDBF->fp, nRecordOffset, 0 );
